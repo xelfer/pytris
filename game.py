@@ -1,20 +1,6 @@
 import random
 
 class Game:
-	# 2d gameboard array
-	gameboard = 0
-	# our timer, updates in seconds
-	timer = 0
-	# blocks which we can select from
-	blocks = []
-	# if a block is falling or not, starts as True
-	falling = True
-	# screen variables
-	screen_size = 0
-	screen = 0
-	# game speed ticks in miliseconds
-	speed = 0
-
 	def __init__(self):
 		self.gameboard = [[0 for i in xrange(10)] for i in xrange(20)]
 		self.blocks = ['I', 'J', 'L', 'O', 'Z', 'T', 'S']
