@@ -6,7 +6,7 @@ def timer_update(g):
 	tmptime = pygame.time.get_ticks()/g.speed
 	if tmptime > g.timer:
 		g.timer = tmptime
-		drawGame(g)
+		gameLoop(g)
 
 
 		
@@ -14,33 +14,30 @@ def timer_update(g):
 def gameLoop(g):
 	if g.falling == False:
 			addNewBlock(g)
+	drawGame(g)
 
 
 # draws the game according to the array
 def drawGame(g):
+	block = pygame.image.load("I.png")
+	blockrect = block.get_rect()
 
-	x,y=0,0
-	for row in g.gameboard:
-		for cell in row:
-			if cell == 1:
+	for y in range(len(g.gameboard)):
+		for x in range(len(g.gameboard[y])):
+			if g.gameboard[y][x] == 1:
 				# determine block position for a block
 				# y is row, x is column
-				block = pygame.image.load("block.png")
-				blockrect = block.get_rect()
 				blockrect.x = (x*blockrect.width)
 				blockrect.y = (y*blockrect.height)
 				g.screen.blit(block, blockrect)
 				pygame.display.flip()
-
-			x=x+1
-		x=0
-		y=y+1
 
 
 # adds a new block to the array
 def addNewBlock(g):
 	blocktoadd = g.getNewBlock()
 	print "Adding %s block" % blocktoadd
+
 
 # main
 def main():
@@ -57,7 +54,6 @@ def main():
 			if event.type == pygame.QUIT: sys.exit()
 
 		timer_update(g)
-		gameLoop(g)
 
 
 if __name__ == "__main__":
