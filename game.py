@@ -9,25 +9,36 @@ class Game:
 		self.screen_colour = 0,0,0
 		self.speed = 1000
 		self.timer = 0
-		# temporary
-		self.gameboard[1][4] = 1
-		self.gameboard[2][4] = 1
-		self.gameboard[3][4] = 1
-		self.gameboard[0][4] = 1
+		self.winstatus = 0	
 
 	def getNewBlock(self):
 		self.falling = True
-		return random.choice(self.blocks)
+		choice = random.choice(self.blocks)
+		if choice == 'I':
+			return self.IBlock()
+		elif choice == 'J':
+			return self.JBlock()
+		elif choice == 'L':
+			return self.LBlock()
+		elif choice == 'O':
+			return self.OBlock()
+		elif choice == 'S':
+			return self.SBlock()
+		elif choice == 'T':
+			return self.TBlock()	
+		elif choice == 'Z':
+			return self.ZBlock()
+		
 
-	def iBlock(self):
+	def IBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(4)]
-		block[0][5] = 'I'
-		block[1][5] = 'I'
-		block[2][5] = 'I'
-		block[3][5] = 'I'
+		block[0][4] = 'I'
+		block[1][4] = 'I'
+		block[2][4] = 'I'
+		block[3][4] = 'I'
 		return block
 
-	def jBlock(self):
+	def JBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(3)]
 		block[0][5] = 'J'
 		block[1][5] = 'J'
@@ -35,43 +46,43 @@ class Game:
 		block[2][4] = 'J'
 		return block
 
-	def lBlock(self):
+	def LBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(3)]
-		block[0][5] = 'L'
-		block[1][5] = 'L'
+		block[0][4] = 'L'
+		block[1][4] = 'L'
+		block[2][4] = 'L'
 		block[2][5] = 'L'
-		block[2][6] = 'L'
 		return block
 
-	def oBlock(self):
+	def OBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(2)]
 		block[0][4] = 'O'
-		block[1][5] = 'O'
-		block[0][4] = 'O'
+		block[0][5] = 'O'
+		block[1][4] = 'O'
 		block[1][5] = 'O'
 		return block
 
-	def zBlock(self):
+	def ZBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(2)]
+		block[0][3] = 'Z'
 		block[0][4] = 'Z'
-		block[0][5] = 'Z'
+		block[1][4] = 'Z'
 		block[1][5] = 'Z'
-		block[1][6] = 'Z'
 		return block
 
-	def tBlock(self):
+	def TBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(2)]
-		block[0][5] = 'T'
+		block[0][4] = 'T'
+		block[1][3] = 'T'
 		block[1][4] = 'T'
 		block[1][5] = 'T'
-		block[1][6] = 'T'
 		return block
 
-	def sBlock(self):
+	def SBlock(self):
 		block = [[0 for i in xrange(10)] for i in xrange(2)]
 		block[0][5] = 'S'
-		block[0][6] = 'S'
-		block[1][5] = 'S'
+		block[0][4] = 'S'
 		block[1][4] = 'S'
+		block[1][3] = 'S'
 		return block
 
