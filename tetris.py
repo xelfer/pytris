@@ -15,7 +15,6 @@ def gameLoop(g):
 		if g.falling == False:
 			addNewBlock(g)
 			drawGame(g)
-
 		else:
 			moveFallingPieceDown(g)
 
@@ -44,6 +43,7 @@ def moveFallingPieceDown(g):
 		stop(g)
 
 	g.gameboard.reverse()
+	print g.blockpos
 	drawGame(g)
 
 
@@ -100,30 +100,55 @@ def stop(g):
 				g.gameboard[y][x] = g.gameboard[y][x].lower()
 	g.falling = False
 
+def rotateArray(block):
+	return zip(*block[::-1])
+
 def rotatePiece(g):
-
-	# create a tmp board which just has the piece to rotate
-	#tmpboard = [['0' for i in xrange(g.boardwidth)] for i in xrange(g.boardheight)]
-	#for y in range(len(g.gameboard)):
-	#		for x in range(len(g.gameboard[y])):
-	#			if (re.match(r'[A-Z]', g.gameboard[y][x], flags=0)):
-	#				tmpboard[y][x] = g.gameboard[y][x]
-
-
 	y,x = g.blockpos
 	# create a 4x4 with the piece to rotate
-	block = g.getBlock(g.currentBlock)
-	pprint.pprint(block)
+	block = g.block
 
-	# rotate it
 	print g.currentBlock
-	if g.currentBlock == 'O': pass
-	elif g.currentBlock == 'I':pass
-	elif g.currentBlock == 'J':pass
-	elif g.currentBlock == 'L':pass
-	elif g.currentBlock == 'S':pass
-	elif g.currentBlock == 'T':pass
-	elif g.currentBlock == 'Z':pass
+	if g.currentBlock == 'O': 
+		pass
+	else:
+		block = rotateArray(block)
+		# check if the block clashes with anything
+		rotate = True
+		yy,xx = g.blockpos # offset
+		for y in range(len(block)):
+			for x in range(len(block[y])):
+				if (x+xx < g.boardwidth-1) and (y+yy < g.boardheight-1):
+					print y+yy, x+xx, g.gameboard[y+yy][x+xx]
+					if (re.match(r'[a-z]', g.gameboard[y+yy][x+xx], flags=0)):
+						rotate = False
+
+		if (rotate):
+			# clear the old one
+			for y in range(len(g.gameboard)):
+				for x in range(len(g.gameboard[y])):
+					move = re.match(r'[A-Z]', g.gameboard[y][x], flags=0)
+					if(move):
+						g.gameboard[y][x] = '0'
+			# add the new one
+			for y in range(len(block)):
+				for x in range(len(block[y])):
+					print y+yy,x+xx
+					g.gameboard[y+yy][x+xx] = block[y][x]
+			g.block = list(block)
+			pprint.pprint(g.block)
+		else:
+			print "can't rotate"
+		
+		
+
+
+	#elif g.currentBlock == 'I':pass
+	#elif g.currentBlock == 'J':pass
+	#elif g.currentBlock == 'L':pass
+	#elif g.currentBlock == 'S':pass
+	#elif g.currentBlock == 'T':pass
+	#elif g.currentBlock == 'Z':pass
 
 	# check if it clashes
 
@@ -190,8 +215,8 @@ def drawGame(g):
 
 # adds a new block to the array
 def addNewBlock(g):
-	blocktoadd = g.getNewBlock()
-
+	g.getNewBlock()
+	blocktoadd = g.block
 	# check if the whole new block will fit before declaring game over
 	for y in range(len(blocktoadd)):
 		for x in range(len(blocktoadd[y])):

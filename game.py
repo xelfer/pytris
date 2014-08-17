@@ -1,4 +1,5 @@
 import random
+import pprint
 
 class Game:
 	def __init__(self):
@@ -14,89 +15,82 @@ class Game:
 		self.speed = 1000
 		self.timer = 0
 		self.gameover = False
+		self.block = [['0' for i in xrange(4)] for i in xrange(4)]
+
+	def resetBlock(self):
+		self.block = [['0' for i in xrange(4)] for i in xrange(4)]
+		for y in range(len(self.block)):
+			for x in range(len(self.block[y])):
+				self.block[y][x] = '0'
 
 	def getNewBlock(self):
 		self.falling = True
 		self.currentBlock = random.choice(self.blocks)
+		self.blockpos = [0,3]
 		return self.getBlock(self.currentBlock)
 
 	def getBlock(self, block):
 		if block == 'I':
-			return self.IBlock()
+			self.IBlock()
 		elif block == 'J':
-			return self.JBlock()
+			self.JBlock()
 		elif block == 'L':
-			return self.LBlock()
+			self.LBlock()
 		elif block == 'O':
-			return self.OBlock()
+			self.OBlock()
 		elif block == 'S':
-			return self.SBlock()
+			self.SBlock()
 		elif block == 'T':
-			return self.TBlock()	
+			self.TBlock()	
 		elif block == 'Z':
-			return self.ZBlock()
+			self.ZBlock()
 
 	def IBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][2] = 'I'
-		block[1][2] = 'I'
-		block[2][2] = 'I'
-		block[3][2] = 'I'
-		self.blockpos = [1,4]
-		return block
+		self.resetBlock()
+		self.block[0][2] = 'I'
+		self.block[1][2] = 'I'
+		self.block[2][2] = 'I'
+		self.block[3][2] = 'I'
 
 	def JBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][2] = 'J'
-		block[1][2] = 'J'
-		block[2][2] = 'J'
-		block[2][1] = 'J'
-		self.blockpos = [1,5]
-
-		return block
+		self.resetBlock()
+		self.block[0][2] = 'J'
+		self.block[1][2] = 'J'
+		self.block[2][2] = 'J'
+		self.block[2][1] = 'J'
 
 	def LBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][1] = 'L'
-		block[1][1] = 'L'
-		block[2][1] = 'L'
-		block[2][2] = 'L'
-		self.blockpos = [1,4]
-		return block
+		self.resetBlock()
+		self.block[0][1] = 'L'
+		self.block[1][1] = 'L'
+		self.block[2][1] = 'L'
+		self.block[2][2] = 'L'
 
 	def OBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][1] = 'O'
-		block[0][2] = 'O'
-		block[1][1] = 'O'
-		block[1][2] = 'O'
-		self.blockpos = [0,5]
-		return block
+		self.resetBlock()
+		self.block[0][1] = 'O'
+		self.block[0][2] = 'O'
+		self.block[1][1] = 'O'
+		self.block[1][2] = 'O'
 
 	def ZBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][1] = 'Z'
-		block[0][2] = 'Z'
-		block[1][2] = 'Z'
-		block[1][3] = 'Z'
-		self.blockpos = [0,4]
-		return block
+		self.resetBlock()
+		self.block[0][1] = 'Z'
+		self.block[0][2] = 'Z'
+		self.block[1][2] = 'Z'
+		self.block[1][3] = 'Z'
 
 	def TBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][1] = 'T'
-		block[1][0] = 'T'
-		block[1][1] = 'T'
-		block[1][2] = 'T'
-		self.blockpos = [1,4]
-		return block
+		self.resetBlock()
+		self.block[0][1] = 'T'
+		self.block[1][0] = 'T'
+		self.block[1][1] = 'T'
+		self.block[1][2] = 'T'
 
 	def SBlock(self):
-		block = [['0' for i in xrange(4)] for i in xrange(4)]
-		block[0][3] = 'S'
-		block[0][2] = 'S'
-		block[1][2] = 'S'
-		block[1][1] = 'S'
-		self.blockpos = [0,4]
-		return block
+		self.resetBlock()
+		self.block[0][3] = 'S'
+		self.block[0][2] = 'S'
+		self.block[1][2] = 'S'
+		self.block[1][1] = 'S'
 
