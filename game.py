@@ -15,7 +15,6 @@ class Game:
 		self.speed = 1000
 		self.timer = 0
 		self.gameover = False
-		self.block = [['0' for i in xrange(4)] for i in xrange(4)]
 
 	def resetBlock(self):
 		self.block = [['0' for i in xrange(4)] for i in xrange(4)]

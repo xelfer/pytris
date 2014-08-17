@@ -17,6 +17,27 @@ def gameLoop(g):
 			drawGame(g)
 		else:
 			moveFallingPieceDown(g)
+		lineCheck(g)
+
+def lineCheck(g):
+	for y in range(len(g.gameboard)):
+		fullline = True
+		for x in range(len(g.gameboard[y])):
+			if (g.gameboard[y][x] == '0'):
+				fullline = False
+		if (fullline): #remove line y
+			# make that matched row 'none'
+			for x in range(len(g.gameboard[y])):
+				g.gameboard[y][x] = None
+			# swap it 
+			g.gameboard.reverse()
+			g.gameboard = removeBlankRows(g.gameboard)
+			g.gameboard.append(['0' for i in xrange(g.boardwidth)])
+			g.gameboard.reverse()
+			drawGame(g)
+
+def removeBlankRows(grid):
+    return [list(row) for row in grid if any(row)]
 
 def moveFallingPieceDown(g):
 	g.gameboard.reverse()
@@ -104,7 +125,6 @@ def rotateArray(block):
 	return zip(*block[::-1])
 
 def rotatePiece(g):
-	y,x = g.blockpos
 	# create a 4x4 with the piece to rotate
 	block = g.block
 
@@ -116,10 +136,18 @@ def rotatePiece(g):
 		# check if the block clashes with anything
 		rotate = True
 		yy,xx = g.blockpos # offset
+		# fix bounds
+		if xx > (g.boardwidth-4):
+			xx = g.boardwidth-4
+		elif xx < 0:
+			xx = 0
+		if yy > (g.boardheight-4):
+			yy = g.boardheight-4
+
 		for y in range(len(block)):
 			for x in range(len(block[y])):
+				
 				if (x+xx < g.boardwidth-1) and (y+yy < g.boardheight-1):
-					print y+yy, x+xx, g.gameboard[y+yy][x+xx]
 					if (re.match(r'[a-z]', g.gameboard[y+yy][x+xx], flags=0)):
 						rotate = False
 
@@ -133,7 +161,6 @@ def rotatePiece(g):
 			# add the new one
 			for y in range(len(block)):
 				for x in range(len(block[y])):
-					print y+yy,x+xx
 					g.gameboard[y+yy][x+xx] = block[y][x]
 			g.block = list(block)
 			pprint.pprint(g.block)
