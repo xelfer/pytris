@@ -6,84 +6,97 @@ class Game:
 		self.boardheight = 20
 		self.gameboard = [['0' for i in xrange(self.boardwidth)] for i in xrange(self.boardheight)]
 		self.blocks = ['I', 'J', 'L', 'O', 'Z', 'T', 'S']
+		self.blockpos = [0,0]
+		self.blockrotate = 0
 		self.falling = False
 		self.screen_size = self.width, self.height = 500, 1000
 		self.screen_colour = 0,0,0
-		self.speed = 500
+		self.speed = 1000
 		self.timer = 0
 		self.gameover = False
 
 	def getNewBlock(self):
 		self.falling = True
-		self.piece = random.choice(self.blocks)
-		if self.piece == 'I':
+		self.currentBlock = random.choice(self.blocks)
+		return self.getBlock(self.currentBlock)
+
+	def getBlock(self, block):
+		if block == 'I':
 			return self.IBlock()
-		elif self.piece == 'J':
+		elif block == 'J':
 			return self.JBlock()
-		elif self.piece == 'L':
+		elif block == 'L':
 			return self.LBlock()
-		elif self.piece == 'O':
+		elif block == 'O':
 			return self.OBlock()
-		elif self.piece == 'S':
+		elif block == 'S':
 			return self.SBlock()
-		elif self.piece == 'T':
+		elif block == 'T':
 			return self.TBlock()	
-		elif self.piece == 'Z':
+		elif block == 'Z':
 			return self.ZBlock()
 
 	def IBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(4)]
-		block[0][4] = 'I'
-		block[1][4] = 'I'
-		block[2][4] = 'I'
-		block[3][4] = 'I'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][2] = 'I'
+		block[1][2] = 'I'
+		block[2][2] = 'I'
+		block[3][2] = 'I'
+		self.blockpos = [1,4]
 		return block
 
 	def JBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(3)]
-		block[0][5] = 'J'
-		block[1][5] = 'J'
-		block[2][5] = 'J'
-		block[2][4] = 'J'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][2] = 'J'
+		block[1][2] = 'J'
+		block[2][2] = 'J'
+		block[2][1] = 'J'
+		self.blockpos = [1,5]
+
 		return block
 
 	def LBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(3)]
-		block[0][4] = 'L'
-		block[1][4] = 'L'
-		block[2][4] = 'L'
-		block[2][5] = 'L'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][1] = 'L'
+		block[1][1] = 'L'
+		block[2][1] = 'L'
+		block[2][2] = 'L'
+		self.blockpos = [1,4]
 		return block
 
 	def OBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(2)]
-		block[0][4] = 'O'
-		block[0][5] = 'O'
-		block[1][4] = 'O'
-		block[1][5] = 'O'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][1] = 'O'
+		block[0][2] = 'O'
+		block[1][1] = 'O'
+		block[1][2] = 'O'
+		self.blockpos = [0,5]
 		return block
 
 	def ZBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(2)]
-		block[0][3] = 'Z'
-		block[0][4] = 'Z'
-		block[1][4] = 'Z'
-		block[1][5] = 'Z'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][1] = 'Z'
+		block[0][2] = 'Z'
+		block[1][2] = 'Z'
+		block[1][3] = 'Z'
+		self.blockpos = [0,4]
 		return block
 
 	def TBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(2)]
-		block[0][4] = 'T'
-		block[1][3] = 'T'
-		block[1][4] = 'T'
-		block[1][5] = 'T'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][1] = 'T'
+		block[1][0] = 'T'
+		block[1][1] = 'T'
+		block[1][2] = 'T'
+		self.blockpos = [1,4]
 		return block
 
 	def SBlock(self):
-		block = [['0' for i in xrange(10)] for i in xrange(2)]
-		block[0][5] = 'S'
-		block[0][4] = 'S'
-		block[1][4] = 'S'
-		block[1][3] = 'S'
+		block = [['0' for i in xrange(4)] for i in xrange(4)]
+		block[0][3] = 'S'
+		block[0][2] = 'S'
+		block[1][2] = 'S'
+		block[1][1] = 'S'
+		self.blockpos = [0,4]
 		return block
 

@@ -14,8 +14,10 @@ def gameLoop(g):
 	if (g.gameover == False):
 		if g.falling == False:
 			addNewBlock(g)
-		moveFallingPieceDown(g)
-		drawGame(g)
+			drawGame(g)
+
+		else:
+			moveFallingPieceDown(g)
 
 def moveFallingPieceDown(g):
 	g.gameboard.reverse()
@@ -36,6 +38,8 @@ def moveFallingPieceDown(g):
 				if move:
 					g.gameboard[y-1][x] = g.gameboard[y][x]
 					g.gameboard[y][x] = '0'
+		g.blockpos = [g.blockpos[0]+1, g.blockpos[1]]
+
 	else:
 		stop(g)
 
@@ -61,6 +65,8 @@ def moveFallingPieceLeft(g):
 				if move:
 					g.gameboard[y][x-1] = g.gameboard[y][x]
 					g.gameboard[y][x] = '0'
+		g.blockpos = [g.blockpos[0], g.blockpos[1]-1]
+
 	drawGame(g)
 
 def moveFallingPieceRight(g):
@@ -83,6 +89,8 @@ def moveFallingPieceRight(g):
 					g.gameboard[y][xx+1] = g.gameboard[y][xx]
 					g.gameboard[y][xx] = '0'
 				xx=xx-1	
+		g.blockpos = [g.blockpos[0], g.blockpos[1]+1]
+
 	drawGame(g)
 
 def stop(g):
@@ -91,6 +99,40 @@ def stop(g):
 			if (re.match(r'[A-Z]', g.gameboard[y][x], flags=0)):
 				g.gameboard[y][x] = g.gameboard[y][x].lower()
 	g.falling = False
+
+def rotatePiece(g):
+
+	# create a tmp board which just has the piece to rotate
+	#tmpboard = [['0' for i in xrange(g.boardwidth)] for i in xrange(g.boardheight)]
+	#for y in range(len(g.gameboard)):
+	#		for x in range(len(g.gameboard[y])):
+	#			if (re.match(r'[A-Z]', g.gameboard[y][x], flags=0)):
+	#				tmpboard[y][x] = g.gameboard[y][x]
+
+
+	y,x = g.blockpos
+	# create a 4x4 with the piece to rotate
+	block = g.getBlock(g.currentBlock)
+	pprint.pprint(block)
+
+	# rotate it
+	print g.currentBlock
+	if g.currentBlock == 'O': pass
+	elif g.currentBlock == 'I':pass
+	elif g.currentBlock == 'J':pass
+	elif g.currentBlock == 'L':pass
+	elif g.currentBlock == 'S':pass
+	elif g.currentBlock == 'T':pass
+	elif g.currentBlock == 'Z':pass
+
+	# check if it clashes
+
+	# if it doesn't, keep the new board
+
+	# if it does, don't do anything, keep current board
+	drawGame(g)
+	
+
 
 # draws the game according to the array
 def drawGame(g):
@@ -154,16 +196,15 @@ def addNewBlock(g):
 	for y in range(len(blocktoadd)):
 		for x in range(len(blocktoadd[y])):
 			if blocktoadd[y][x] != '0':
-				if g.gameboard[y][x] != '0':
+				if g.gameboard[y][x+3] != '0':
 					g.gameover = True
-					pprint.pprint(g.gameboard)
 
 	if (g.gameover == False):
 		for y in range(len(blocktoadd)):
 			for x in range(len(blocktoadd[y])):
 				if blocktoadd[y][x] != '0':
-					if g.gameboard[y][x] == '0':
-						g.gameboard[y][x] = blocktoadd[y][x]
+					if g.gameboard[y][x+3] == '0':
+						g.gameboard[y][x+3] = blocktoadd[y][x]
 				
 # main
 def main():
