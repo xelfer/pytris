@@ -1,1 +1,4 @@
 attempting to write tetris in python with pygame
+
+tetris.py - class description for pieces and game board
+game.py - main game structure 
