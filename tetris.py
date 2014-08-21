@@ -11,6 +11,7 @@ def timer_update(g):
 
 # the main game loop
 def gameLoop(g):
+	drawGame(g)
 	if (g.gameover == False):
 		if g.falling == False:
 			addNewBlock(g)
@@ -34,7 +35,6 @@ def lineCheck(g):
 			g.gameboard = removeBlankRows(g.gameboard)
 			g.gameboard.append(['0' for i in xrange(g.boardwidth)])
 			g.gameboard.reverse()
-			drawGame(g)
 
 def removeBlankRows(grid):
     return [list(row) for row in grid if any(row)]
@@ -64,7 +64,6 @@ def moveFallingPieceDown(g):
 		stop(g)
 
 	g.gameboard.reverse()
-	print g.blockpos
 	drawGame(g)
 
 
@@ -164,24 +163,7 @@ def rotatePiece(g):
 					g.gameboard[y+yy][x+xx] = block[y][x]
 			g.block = list(block)
 			pprint.pprint(g.block)
-		else:
-			print "can't rotate"
 		
-		
-
-
-	#elif g.currentBlock == 'I':pass
-	#elif g.currentBlock == 'J':pass
-	#elif g.currentBlock == 'L':pass
-	#elif g.currentBlock == 'S':pass
-	#elif g.currentBlock == 'T':pass
-	#elif g.currentBlock == 'Z':pass
-
-	# check if it clashes
-
-	# if it doesn't, keep the new board
-
-	# if it does, don't do anything, keep current board
 	drawGame(g)
 	
 
@@ -267,7 +249,8 @@ def main():
 	g.screen = pygame.display.set_mode(g.screen_size)
 	g.screen.fill(g.screen_colour)
 
-	
+	drawGame(g)
+
 	# main game loop
 	while 1:
 		for event in pygame.event.get():

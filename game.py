@@ -16,6 +16,9 @@ class Game:
 		self.timer = 0
 		self.gameover = False
 
+
+
+
 	def resetBlock(self):
 		self.block = [['0' for i in xrange(4)] for i in xrange(4)]
 		for y in range(len(self.block)):
